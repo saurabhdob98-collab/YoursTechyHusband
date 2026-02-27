@@ -6,22 +6,19 @@
 <title>For My Khushi ❤️</title>
 
 <style>
+/* BODY & COMMON */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
-    background: linear-gradient(135deg, #ff6a88, #ff99ac);
-    color: white;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
-/* COMMON */
+/* HIDDEN SECTIONS */
 .hidden { display: none; }
-.container { padding: 20px; max-width: 800px; margin:auto; }
-h1,h2 { text-align:center; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
 
-/* Buttons */
+/* BUTTONS */
 button{
     padding:12px 25px;
     margin:10px;
@@ -31,21 +28,19 @@ button{
     cursor:pointer;
     transition:0.3s;
 }
+button:hover{ transform: scale(1.05);}
 .yes-btn { background-color:#ff4d6d; color:white; }
 
-/* Hearts */
+/* HEARTS */
 .heart {
     position: fixed;
     bottom: -10px;
     font-size: 20px;
     animation: float 6s linear infinite;
 }
-@keyframes float {
-    0% {transform: translateY(0); opacity: 1;}
-    100% {transform: translateY(-800px); opacity: 0;}
-}
+@keyframes float { 0% {transform: translateY(0); opacity: 1;} 100% {transform: translateY(-800px); opacity: 0;} }
 
-/* Gallery */
+/* GALLERY */
 .gallery { display:flex; flex-wrap:wrap; justify-content:center; gap:15px; margin:20px 0;}
 .gallery img {
     width:200px; height:200px;
@@ -60,14 +55,22 @@ button{
 .gallery img:nth-child(even){ transform: rotate(3deg);}
 .gallery img:hover{ transform: scale(1.08) rotate(0deg); }
 
-/* Questions */
+/* QUESTIONS */
 .question-section{ margin:40px auto; background:white; color:#333; border-radius:20px; padding:25px; box-shadow:0 10px 25px rgba(0,0,0,0.3);}
 .question-section p{ font-size:20px; margin:15px 0; }
+.question-section button{
+    background: linear-gradient(135deg,#ff99ac,#ff6a88);
+    color:white;
+    border-radius:20px;
+    padding:10px 20px;
+    border:none;
+    font-size:16px;
+}
 
-/* Countdown */
-#countdown, #loveTimer { font-size:24px; font-weight:bold; margin:20px 0; }
+/* COUNTDOWN */
+#loveTimer { font-size:24px; font-weight:bold; margin:20px 0; }
 
-/* Proposal popup */
+/* PROPOSAL POPUP */
 #proposalPopup {
     position: fixed;
     top:0; left:0; width:100%; height:100%;
@@ -82,7 +85,7 @@ button{
 #proposalPopup h1{ font-size:60px; color:#ff1a75; text-shadow:0 0 40px #ff1a75; }
 #proposalPopup h2{ font-size:30px; margin-top:20px; }
 
-/* Confetti */
+/* CONFETTI */
 .confetti {
     position: fixed;
     width: 10px; height:10px;
@@ -91,16 +94,55 @@ button{
 }
 @keyframes fall { to { transform: translateY(100vh); } }
 
-/* Typewriter */
-.typewriter h1 {
-  overflow: hidden;
-  border-right: .15em solid white;
-  white-space: nowrap;
-  animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
-}
+/* TYPEWRITER */
+.typewriter h1 { overflow:hidden; border-right: .15em solid white; white-space: nowrap; animation: typing 3s steps(40,end), blink-caret .75s step-end infinite;}
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink-caret { 50% { border-color: transparent; } }
 
+/* LOGIN PAGE */
+#passwordSection {
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#8B0000;
+    color:white;
+}
+#passwordSection input{
+    padding:15px 20px;
+    border-radius:30px;
+    border:none;
+    font-size:18px;
+    text-align:center;
+    outline:none;
+    width:250px;
+    box-shadow:0 0 20px #ff69b4;
+}
+#passwordSection button{
+    padding:15px 30px;
+    border-radius:50px;
+    border:none;
+    font-size:20px;
+    background:linear-gradient(45deg,#ff69b4,#ff1493);
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 25px #ff1493;
+    margin-top:15px;
+}
+
+/* LOGIN IMAGES */
+#loginImages { display:flex; gap:15px; margin:20px 0;}
+#loginImages img{
+    width:100px; height:100px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 5px 15px rgba(255,105,180,0.5);
+}
+
+/* FLOATING HEARTS LOGIN */
+#floatingHearts{ position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -109,13 +151,22 @@ button{
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- PASSWORD -->
-<div class="container" id="passwordSection">
-<h2>🔐 Special Surprise For Khushi</h2>
-<p>Enter our special word to unlock ❤️</p>
-<input type="password" id="passwordInput" placeholder="Hint: What I call you 😉"><br>
-<button onclick="checkPassword()">Unlock 💖</button>
-<p id="passMessage"></p>
+<!-- LOGIN PAGE -->
+<div id="passwordSection">
+    <div id="floatingHearts"></div>
+    <h1 style="font-size:45px; text-shadow:0 0 20px #ff69b4;">🔐 Special Surprise For Khushi</h1>
+    <p style="font-size:20px; color:#ffe6e6;">Enter our secret word to unlock 💖</p>
+    
+    <!-- 3 Images -->
+    <div id="loginImages">
+        <img src="photo1.jpg">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+    </div>
+    
+    <input type="password" id="passwordInput" placeholder="Hint: What I call you 😉"><br>
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="passMessage"></p>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -139,8 +190,6 @@ button{
 <img src="photo1.jpg">
 <img src="photo2.jpg">
 <img src="photo3.jpg">
-<img src="photo4.jpg">
-<img src="photo5.jpg">
 </div>
 </div>
 
@@ -185,7 +234,7 @@ button{
 </div>
 
 <script>
-// PASSWORD
+// PASSWORD CHECK
 function checkPassword() {
     var password = document.getElementById("passwordInput").value;
     if(password.toLowerCase() === "jaan"){
@@ -199,7 +248,7 @@ function checkPassword() {
     }
 }
 
-// HEARTS
+// FLOATING HEARTS MAIN
 function startHearts() {
     setInterval(()=> {
         const heart=document.createElement("div");
@@ -211,6 +260,26 @@ function startHearts() {
         setTimeout(()=>heart.remove(),6000);
     },400);
 }
+
+// FLOATING HEARTS LOGIN
+function createLoginHeart() {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️';
+    heart.style.position = 'absolute';
+    heart.style.fontSize = Math.random()*25 + 15 + 'px';
+    heart.style.left = Math.random()*90 + 'vw';
+    heart.style.top = Math.random()*90 + 'vh';
+    heart.style.opacity = 0.7;
+    heart.style.pointerEvents = 'none';
+    heart.style.transition = 'all 5s linear';
+    document.getElementById('floatingHearts').appendChild(heart);
+    setTimeout(()=>{
+        heart.style.transform = `translateY(-200px) rotate(${Math.random()*360}deg)`;
+        heart.style.opacity = 0;
+    },50);
+    setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createLoginHeart, 400);
 
 // NO BUTTON FUN
 document.getElementById("noBtn").onmouseover=function(){
@@ -238,8 +307,6 @@ function startCountdown(){
 function showProposal(){
     const popup = document.getElementById("proposalPopup");
     popup.style.display="flex";
-
-    // Confetti
     for(let i=0;i<150;i++){
         const conf=document.createElement("div");
         conf.classList.add("confetti");
