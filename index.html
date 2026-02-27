@@ -2,154 +2,253 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Our Love Story ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Khushi ❤️</title>
 
 <style>
-body{
-    margin:0;
-    font-family:'Segoe UI', sans-serif;
-    background:black;
-    color:white;
-    overflow:hidden;
-    text-align:center;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    color: white;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
-.section{
-    position:absolute;
-    width:100%;
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    transition:1s;
-}
+/* COMMON */
+.hidden { display: none; }
+.container { padding: 20px; max-width: 800px; margin:auto; }
+h1,h2 { text-align:center; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
 
-.hidden{opacity:0; pointer-events:none;}
+/* Buttons */
 button{
     padding:12px 25px;
-    margin:15px;
+    margin:10px;
     font-size:18px;
     border:none;
-    border-radius:30px;
+    border-radius:25px;
     cursor:pointer;
+    transition:0.3s;
+}
+.yes-btn { background-color:#ff4d6d; color:white; }
+
+/* Hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+@keyframes float {
+    0% {transform: translateY(0); opacity: 1;}
+    100% {transform: translateY(-800px); opacity: 0;}
 }
 
-.next{background:#ff4d88;color:white;}
-#yes{background:#ff0066;color:white;box-shadow:0 0 20px #ff0066;}
-#no{background:white;color:black;}
-
-img{
-    max-width:300px;
+/* Gallery */
+.gallery { display:flex; flex-wrap:wrap; justify-content:center; gap:15px; margin:20px 0;}
+.gallery img {
+    width:200px; height:200px;
+    object-fit:cover;
     border-radius:20px;
-    margin:15px;
-    box-shadow:0 0 20px #ff4d88;
+    padding:5px;
+    background:#dcf8c6;
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+    transform: rotate(-3deg);
+    transition:0.3s;
 }
+.gallery img:nth-child(even){ transform: rotate(3deg);}
+.gallery img:hover{ transform: scale(1.08) rotate(0deg); }
 
-h1{
-    font-size:45px;
-    animation:glow 2s infinite alternate;
-}
+/* Questions */
+.question-section{ margin:40px auto; background:white; color:#333; border-radius:20px; padding:25px; box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+.question-section p{ font-size:20px; margin:15px 0; }
 
-@keyframes glow{
-    from{text-shadow:0 0 10px #ff0066;}
-    to{text-shadow:0 0 30px #ff4da6;}
-}
+/* Countdown */
+#countdown, #loveTimer { font-size:24px; font-weight:bold; margin:20px 0; }
 
-.heart{
-    position:absolute;
-    color:#ff4da6;
-    animation:float 6s linear infinite;
+/* Proposal popup */
+#proposalPopup {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.9);
+    color:white;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
 }
+#proposalPopup h1{ font-size:60px; color:#ff1a75; text-shadow:0 0 40px #ff1a75; }
+#proposalPopup h2{ font-size:30px; margin-top:20px; }
 
-@keyframes float{
-    from{transform:translateY(100vh);}
-    to{transform:translateY(-10vh);}
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px; height:10px;
+    top:0;
+    animation: fall 3s linear forwards;
 }
+@keyframes fall { to { transform: translateY(100vh); } }
+
+/* Typewriter */
+.typewriter h1 {
+  overflow: hidden;
+  border-right: .15em solid white;
+  white-space: nowrap;
+  animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+}
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes blink-caret { 50% { border-color: transparent; } }
+
 </style>
 </head>
-
 <body>
 
-<audio autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop>
+<source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- SECTION 1 -->
-<div class="section" id="s1">
-<h1>Hey My Love ❤️</h1>
-<p>I made something special for you...</p>
-<button class="next" onclick="next(1)">Start Our Story ✨</button>
+<!-- PASSWORD -->
+<div class="container" id="passwordSection">
+<h2>🔐 Special Surprise For Khushi</h2>
+<p>Enter our special word to unlock ❤️</p>
+<input type="password" id="passwordInput" placeholder="Hint: What I call you 😉"><br>
+<button onclick="checkPassword()">Unlock 💖</button>
+<p id="passMessage"></p>
 </div>
 
-<!-- SECTION 2 -->
-<div class="section hidden" id="s2">
-<h1>Our Beautiful Memories 💞</h1>
+<!-- MAIN CONTENT -->
+<div class="container hidden" id="mainContent">
+
+<!-- Title -->
+<div class="section typewriter">
+<h1>Khushi, You Are My Forever ❤️</h1>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="section">
+<h2>Wedding Countdown 💍</h2>
+<p id="loveTimer">Loading...</p>
+</div>
+
+<!-- MEMORIES -->
+<div class="section">
+<h2>Our Memories 📸</h2>
+<div class="gallery">
 <img src="photo1.jpg">
 <img src="photo2.jpg">
-<button class="next" onclick="next(2)">More Memories 😍</button>
-</div>
-
-<!-- SECTION 3 -->
-<div class="section hidden" id="s3">
-<h1>Because Every Moment With You...</h1>
 <img src="photo3.jpg">
 <img src="photo4.jpg">
-<button class="next" onclick="next(3)">Answer Something 😉</button>
+<img src="photo5.jpg">
+</div>
 </div>
 
-<!-- SECTION 4 QUESTIONS -->
-<div class="section hidden" id="s4">
-<h1>Quick Questions 😜</h1>
+<!-- ROMANTIC REASONS -->
+<div class="section question-section">
+<h2>Why I Love You 💖</h2>
+<p>Your smile lights up my world ☀️</p>
+<p>You make every moment magical ✨</p>
+<p>You are my strength and happiness ❤️</p>
+</div>
+
+<!-- FUN QUESTIONS -->
+<div class="section question-section">
+<h2>Fun Questions 😜</h2>
 <p>Who loves more?</p>
-<button onclick="alert('Correct answer: You ❤️')">You</button>
-<button onclick="alert('Haha nice try 😜')">Me</button>
+<button onclick="alert('Correct: You ❤️')">You</button>
+<button onclick="alert('Haha 😜 Nice try')">Me</button>
 
-<p>Who is more cute?</p>
-<button onclick="alert('Obviously YOU 😍')">You</button>
-<button onclick="alert('Nopeeee 😂')">Me</button>
+<p>Who is cuter?</p>
+<button onclick="alert('Obviously You 😍')">You</button>
+<button onclick="alert('Nope 😂')">Me</button>
 
-<button class="next" onclick="next(4)">Final Question 💍</button>
+<p>Will you ever say NO to me?</p>
+<button id="noBtn">NO 😏</button>
 </div>
 
-<!-- SECTION 5 PROPOSAL -->
-<div class="section hidden" id="s5">
-<h1>I Promise To Love You Forever...</h1>
-<h2>Will You Be Mine For Lifetime? 💍❤️</h2>
-<button id="yes">YES ❤️</button>
-<button id="no">NO 😜</button>
+<!-- FINAL PROPOSAL -->
+<div class="section question-section">
+<h2>Final Question 💍</h2>
+<p>Khushi… Will you marry me again? 😌</p>
+<button class="yes-btn" onclick="showProposal()">YESSSS ❤️</button>
+</div>
+
+<h3>Forever Yours,<br>Saurabh ❤️</h3>
+
+</div>
+
+<!-- PROPOSAL POPUP -->
+<div id="proposalPopup">
+<h1>She Said YESSSS ❤️💍</h1>
+<h2>Forever Starts Now ✨</h2>
 </div>
 
 <script>
-
-function next(n){
-document.getElementById("s"+n).classList.add("hidden");
-document.getElementById("s"+(n+1)).classList.remove("hidden");
+// PASSWORD
+function checkPassword() {
+    var password = document.getElementById("passwordInput").value;
+    if(password.toLowerCase() === "jaan"){
+        document.getElementById("passwordSection").classList.add("hidden");
+        document.getElementById("mainContent").classList.remove("hidden");
+        document.getElementById("bgMusic").play();
+        startHearts();
+        startCountdown();
+    } else{
+        document.getElementById("passMessage").innerHTML="Oops 😜 Try again!";
+    }
 }
 
-// floating hearts
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+10)+"px";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
-},500);
+// HEARTS
+function startHearts() {
+    setInterval(()=> {
+        const heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.fontSize=(Math.random()*20+15)+"px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    },400);
+}
 
-// YES button
-document.getElementById("yes").onclick=function(){
-document.body.innerHTML="<h1 style='font-size:60px;color:#ff0066;text-shadow:0 0 40px #ff0066;'>She Said YESSSS ❤️💍</h1><h2>Forever Starts Now ✨</h2>";
-};
+// NO BUTTON FUN
+document.getElementById("noBtn").onmouseover=function(){
+    this.style.position="absolute";
+    this.style.left=Math.random()*80+"%";
+    this.style.top=Math.random()*80+"%";
+}
 
-// NO button runs away
-document.getElementById("no").onmouseover=function(){
-this.style.position="absolute";
-this.style.left=Math.random()*80+"%";
-this.style.top=Math.random()*80+"%";
-};
+// WEDDING COUNTDOWN
+function startCountdown(){
+    const weddingDate = new Date("2026-11-21T00:00:00").getTime();
+    setInterval(()=> {
+        const now = new Date().getTime();
+        let diff = weddingDate - now;
+        if(diff<0) diff = 0;
+        const days = Math.floor(diff/(1000*60*60*24));
+        const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+        const mins = Math.floor((diff%(1000*60*60))/(1000*60));
+        const secs = Math.floor((diff%(1000*60))/1000);
+        document.getElementById("loveTimer").innerHTML=`${days}d ${hours}h ${mins}m ${secs}s left until our big day 💍❤️`;
+    },1000);
+}
 
+// SHOW PROPOSAL POPUP + CONFETTI
+function showProposal(){
+    const popup = document.getElementById("proposalPopup");
+    popup.style.display="flex";
+
+    // Confetti
+    for(let i=0;i<150;i++){
+        const conf=document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left=Math.random()*100+"vw";
+        conf.style.background=["#ff0","#0ff","#f0f","#0f0","#f00","#ff69b4"][Math.floor(Math.random()*6)];
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),3000);
+    }
+}
 </script>
 
 </body>
