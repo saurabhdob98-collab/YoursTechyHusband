@@ -13,6 +13,12 @@ body {
     background: linear-gradient(135deg, #ff6a88, #ff99ac);
     color: white;
     overflow-x: hidden;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 .hidden {
@@ -29,17 +35,41 @@ body {
     margin: 25px auto;
     padding: 25px;
     width: 90%;
-    max-width: 600px;
+    max-width: 650px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
+h1 {
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+/* WhatsApp Style Gallery */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
 .gallery img {
-    width: 90%;
-    max-width: 250px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 20px;
+    padding: 8px;
+    background: #dcf8c6;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transform: rotate(-3deg);
+    transition: 0.3s;
+}
+
+.gallery img:nth-child(even) {
+    transform: rotate(3deg);
+}
+
+.gallery img:hover {
+    transform: scale(1.08) rotate(0deg);
 }
 
 button {
@@ -111,9 +141,11 @@ input {
 
 <div class="section">
 <h2>Our Memories 📸</h2>
+<div class="gallery">
 <img src="photo1.jpg">
 <img src="photo2.jpg">
 <img src="photo3.jpg">
+</div>
 </div>
 
 <div class="section">
@@ -122,6 +154,20 @@ input {
 <button class="yes-btn" onclick="yesClicked()">YES 💖</button>
 <button class="no-btn" onmouseover="moveButton(this)">NO 😜</button>
 <p id="response"></p>
+</div>
+
+<div class="section">
+<h2>Rapid Fire For My Jaan 😘</h2>
+
+<p>Who loves you the most in this world? 😎</p>
+<button class="yes-btn" onclick="alert('Obviously meee 😌❤️')">YOU 😍</button>
+
+<p>Who is the cutest wife ever? 🥰</p>
+<button class="yes-btn" onclick="alert('Khushi Shuklaaaa 😍❤️')">ME 💁‍♀️</button>
+
+<p>Will you always support my crazy ideas? 🤪</p>
+<button class="yes-btn" onclick="alert('Deal pakki 😎❤️')">YES BOSS 💖</button>
+
 </div>
 
 <div class="section">
@@ -181,5 +227,4 @@ function createHeart() {
 </script>
 
 </body>
-
 </html>
