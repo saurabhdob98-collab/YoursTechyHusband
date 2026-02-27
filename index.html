@@ -2,189 +2,117 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Khushi ❤️</title>
-
+<title>For My Forever ❤️</title>
 <style>
 body {
-    margin: 0;
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    background: radial-gradient(circle at top, #1a001a, #000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
     font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    background: linear-gradient(135deg, #ff6a88, #ff99ac);
-    color: white;
-    overflow-x: hidden;
+    color:white;
+    text-align:center;
 }
 
-.hidden { display: none; }
-
-.container { padding: 20px; }
-
-.section {
-    background: white;
-    color: #333;
-    margin: 25px auto;
-    padding: 25px;
-    width: 90%;
-    max-width: 650px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+.container {
+    z-index:2;
 }
 
 h1 {
-    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+    font-size:50px;
+    animation: glow 2s infinite alternate;
 }
 
-/* Gallery */
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+p {
+    font-size:24px;
+    opacity:0;
+    animation: fadeIn 3s forwards 2s;
 }
-
-.gallery img {
-    width: 220px;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 20px;
-    padding: 8px;
-    background: #dcf8c6;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    transform: rotate(-3deg);
-    transition: 0.3s;
-}
-
-.gallery img:nth-child(even) { transform: rotate(3deg); }
-.gallery img:hover { transform: scale(1.08) rotate(0deg); }
 
 button {
-    padding: 12px 25px;
-    margin: 10px;
-    font-size: 18px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
+    padding:15px 30px;
+    margin:20px;
+    font-size:20px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.yes-btn { background-color: #ff4d6d; color: white; }
-
-input {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin-top: 10px;
+#yes {
+    background:#ff1a75;
+    color:white;
+    box-shadow:0 0 20px #ff1a75;
 }
 
-/* Hearts */
+#no {
+    background:white;
+    color:black;
+    position:relative;
+}
+
+@keyframes glow {
+    from { text-shadow:0 0 10px #ff1a75; }
+    to { text-shadow:0 0 30px #ff4da6; }
+}
+
+@keyframes fadeIn {
+    to { opacity:1; }
+}
+
 .heart {
-    position: fixed;
-    bottom: -10px;
-    font-size: 20px;
-    animation: float 6s linear infinite;
+    position:absolute;
+    color:#ff4da6;
+    font-size:20px;
+    animation: float 10s linear infinite;
 }
 
 @keyframes float {
-    0% {transform: translateY(0); opacity: 1;}
-    100% {transform: translateY(-800px); opacity: 0;}
+    from { transform:translateY(100vh); }
+    to { transform:translateY(-10vh); }
 }
 </style>
 </head>
-
 <body>
 
-<audio id="bgMusic" loop>
-<source src="song.mp3" type="audio/mpeg">
+<audio autoplay loop>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
 </audio>
 
-<div class="container" id="passwordSection">
-<h2>🔐 Special Surprise For Khushi</h2>
-<p>Enter our special word to unlock ❤️</p>
-<input type="password" id="passwordInput">
-<br>
-<button onclick="checkPassword()">Unlock 💖</button>
-<p id="passMessage"></p>
-</div>
-
-<div class="container hidden" id="mainContent">
-
-<h1>Khushi, You Are My Forever ❤️</h1>
-
-<div class="section">
-<h2>Our Love Timer 💕</h2>
-<p id="loveTimer"></p>
-</div>
-
-<div class="section">
-<h2>Our Memories 📸</h2>
-<div class="gallery">
-<img src="photo1.jpg">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
-</div>
-</div>
-
-<div class="section">
-<h2>Will You Marry Me Again? 💍</h2>
-<button class="yes-btn" onclick="showProposal()">YESSSS ❤️</button>
-</div>
-
-<h3>Forever Yours,<br>Saurabh ❤️</h3>
-
+<div class="container">
+    <h1>My Love ❤️</h1>
+    <p id="text">From the moment you came into my life, everything changed… ✨</p>
+    <p style="margin-top:20px;">Will you be mine forever? 💍</p>
+    <button id="yes">YES ❤️</button>
+    <button id="no">NO 😜</button>
 </div>
 
 <script>
-
-function checkPassword() {
-    var password = document.getElementById("passwordInput").value;
-    if(password.toLowerCase() === "jaan") {
-        document.getElementById("passwordSection").classList.add("hidden");
-        document.getElementById("mainContent").classList.remove("hidden");
-        document.getElementById("bgMusic").play();
-        startHearts();
-        startLoveTimer();
-    } else {
-        document.getElementById("passMessage").innerHTML = "Oops 😜 Try again!";
-    }
-}
-
-/* LOVE TIMER */
-function startLoveTimer() {
-    const weddingDate = new Date("2026-11-21");
-    const today = new Date();
-
-    if(today < weddingDate){
-        const diff = weddingDate - today;
-        const days = Math.floor(diff / (1000*60*60*24));
-        document.getElementById("loveTimer").innerHTML =
-            "Counting down... " + days + " days until our big day 💍❤️";
-    } else {
-        const diff = today - weddingDate;
-        const days = Math.floor(diff / (1000*60*60*24));
-        document.getElementById("loveTimer").innerHTML =
-            "We have been together for " + days + " beautiful days ❤️";
-    }
-}
-
-function showProposal(){
-    alert("Forever and Always ❤️💍");
-}
-
-/* Hearts */
-function startHearts() {
-    setInterval(createHeart, 400);
-}
-
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+// floating hearts
+setInterval(()=>{
+    let heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+10)+"px";
     document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),10000);
+},500);
 
-    setTimeout(() => { heart.remove(); }, 6000);
-}
+// yes click
+document.getElementById("yes").onclick=function(){
+    document.body.innerHTML="<h1 style='font-size:60px;color:#ff1a75;text-shadow:0 0 40px #ff1a75;'>She Said YESSSS ❤️💍</h1>";
+};
 
+// no button run away
+document.getElementById("no").onmouseover=function(){
+    this.style.position="absolute";
+    this.style.left=Math.random()*80+"%";
+    this.style.top=Math.random()*80+"%";
+};
 </script>
 
 </body>
