@@ -2,117 +2,154 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For My Forever ❤️</title>
+<title>Our Love Story ❤️</title>
+
 <style>
-body {
+body{
     margin:0;
-    height:100vh;
-    overflow:hidden;
-    background: radial-gradient(circle at top, #1a001a, #000);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI', sans-serif;
+    background:black;
     color:white;
+    overflow:hidden;
     text-align:center;
 }
 
-.container {
-    z-index:2;
+.section{
+    position:absolute;
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    transition:1s;
 }
 
-h1 {
-    font-size:50px;
-    animation: glow 2s infinite alternate;
-}
-
-p {
-    font-size:24px;
-    opacity:0;
-    animation: fadeIn 3s forwards 2s;
-}
-
-button {
-    padding:15px 30px;
-    margin:20px;
-    font-size:20px;
+.hidden{opacity:0; pointer-events:none;}
+button{
+    padding:12px 25px;
+    margin:15px;
+    font-size:18px;
     border:none;
     border-radius:30px;
     cursor:pointer;
-    transition:0.3s;
 }
 
-#yes {
-    background:#ff1a75;
-    color:white;
-    box-shadow:0 0 20px #ff1a75;
+.next{background:#ff4d88;color:white;}
+#yes{background:#ff0066;color:white;box-shadow:0 0 20px #ff0066;}
+#no{background:white;color:black;}
+
+img{
+    max-width:300px;
+    border-radius:20px;
+    margin:15px;
+    box-shadow:0 0 20px #ff4d88;
 }
 
-#no {
-    background:white;
-    color:black;
-    position:relative;
+h1{
+    font-size:45px;
+    animation:glow 2s infinite alternate;
 }
 
-@keyframes glow {
-    from { text-shadow:0 0 10px #ff1a75; }
-    to { text-shadow:0 0 30px #ff4da6; }
+@keyframes glow{
+    from{text-shadow:0 0 10px #ff0066;}
+    to{text-shadow:0 0 30px #ff4da6;}
 }
 
-@keyframes fadeIn {
-    to { opacity:1; }
-}
-
-.heart {
+.heart{
     position:absolute;
     color:#ff4da6;
-    font-size:20px;
-    animation: float 10s linear infinite;
+    animation:float 6s linear infinite;
 }
 
-@keyframes float {
-    from { transform:translateY(100vh); }
-    to { transform:translateY(-10vh); }
+@keyframes float{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
 }
 </style>
 </head>
+
 <body>
 
 <audio autoplay loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+<source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
-    <h1>My Love ❤️</h1>
-    <p id="text">From the moment you came into my life, everything changed… ✨</p>
-    <p style="margin-top:20px;">Will you be mine forever? 💍</p>
-    <button id="yes">YES ❤️</button>
-    <button id="no">NO 😜</button>
+<!-- SECTION 1 -->
+<div class="section" id="s1">
+<h1>Hey My Love ❤️</h1>
+<p>I made something special for you...</p>
+<button class="next" onclick="next(1)">Start Our Story ✨</button>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section hidden" id="s2">
+<h1>Our Beautiful Memories 💞</h1>
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<button class="next" onclick="next(2)">More Memories 😍</button>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section hidden" id="s3">
+<h1>Because Every Moment With You...</h1>
+<img src="photo3.jpg">
+<img src="photo4.jpg">
+<button class="next" onclick="next(3)">Answer Something 😉</button>
+</div>
+
+<!-- SECTION 4 QUESTIONS -->
+<div class="section hidden" id="s4">
+<h1>Quick Questions 😜</h1>
+<p>Who loves more?</p>
+<button onclick="alert('Correct answer: You ❤️')">You</button>
+<button onclick="alert('Haha nice try 😜')">Me</button>
+
+<p>Who is more cute?</p>
+<button onclick="alert('Obviously YOU 😍')">You</button>
+<button onclick="alert('Nopeeee 😂')">Me</button>
+
+<button class="next" onclick="next(4)">Final Question 💍</button>
+</div>
+
+<!-- SECTION 5 PROPOSAL -->
+<div class="section hidden" id="s5">
+<h1>I Promise To Love You Forever...</h1>
+<h2>Will You Be Mine For Lifetime? 💍❤️</h2>
+<button id="yes">YES ❤️</button>
+<button id="no">NO 😜</button>
 </div>
 
 <script>
+
+function next(n){
+document.getElementById("s"+n).classList.add("hidden");
+document.getElementById("s"+(n+1)).classList.remove("hidden");
+}
+
 // floating hearts
 setInterval(()=>{
-    let heart = document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+10)+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),10000);
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+10)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
 },500);
 
-// yes click
+// YES button
 document.getElementById("yes").onclick=function(){
-    document.body.innerHTML="<h1 style='font-size:60px;color:#ff1a75;text-shadow:0 0 40px #ff1a75;'>She Said YESSSS ❤️💍</h1>";
+document.body.innerHTML="<h1 style='font-size:60px;color:#ff0066;text-shadow:0 0 40px #ff0066;'>She Said YESSSS ❤️💍</h1><h2>Forever Starts Now ✨</h2>";
 };
 
-// no button run away
+// NO button runs away
 document.getElementById("no").onmouseover=function(){
-    this.style.position="absolute";
-    this.style.left=Math.random()*80+"%";
-    this.style.top=Math.random()*80+"%";
+this.style.position="absolute";
+this.style.left=Math.random()*80+"%";
+this.style.top=Math.random()*80+"%";
 };
+
 </script>
 
 </body>
