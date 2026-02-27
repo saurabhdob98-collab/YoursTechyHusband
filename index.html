@@ -13,21 +13,11 @@ body {
     background: linear-gradient(135deg, #ff6a88, #ff99ac);
     color: white;
     overflow-x: hidden;
-    animation: fadeIn 1.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
+.hidden { display: none; }
 
-.hidden {
-    display: none;
-}
-
-.container {
-    padding: 20px;
-}
+.container { padding: 20px; }
 
 .section {
     background: white;
@@ -44,7 +34,7 @@ h1 {
     text-shadow: 0 0 15px rgba(255,255,255,0.8);
 }
 
-/* WhatsApp Style Gallery */
+/* Gallery */
 .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -64,13 +54,8 @@ h1 {
     transition: 0.3s;
 }
 
-.gallery img:nth-child(even) {
-    transform: rotate(3deg);
-}
-
-.gallery img:hover {
-    transform: scale(1.08) rotate(0deg);
-}
+.gallery img:nth-child(even) { transform: rotate(3deg); }
+.gallery img:hover { transform: scale(1.08) rotate(0deg); }
 
 button {
     padding: 12px 25px;
@@ -81,16 +66,8 @@ button {
     cursor: pointer;
 }
 
-.yes-btn {
-    background-color: #ff4d6d;
-    color: white;
-}
-
-.no-btn {
-    background-color: gray;
-    color: white;
-    position: relative;
-}
+.yes-btn { background-color: #ff4d6d; color: white; }
+.no-btn { background-color: gray; color: white; position: relative; }
 
 input {
     padding: 10px;
@@ -99,6 +76,7 @@ input {
     margin-top: 10px;
 }
 
+/* Hearts */
 .heart {
     position: fixed;
     bottom: -10px;
@@ -109,6 +87,51 @@ input {
 @keyframes float {
     0% {transform: translateY(0); opacity: 1;}
     100% {transform: translateY(-800px); opacity: 0;}
+}
+
+/* Proposal Popup */
+#proposalPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.ring {
+    font-size: 80px;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-20px); }
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: yellow;
+    top: 0;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
 }
 </style>
 </head>
@@ -122,7 +145,7 @@ input {
 <div class="container" id="passwordSection">
 <h2>🔐 Special Surprise For Khushi</h2>
 <p>Enter our special word to unlock ❤️</p>
-<input type="password" id="passwordInput" placeholder="Hint: What I call you lovingly 😉">
+<input type="password" id="passwordInput">
 <br>
 <button onclick="checkPassword()">Unlock 💖</button>
 <p id="passMessage"></p>
@@ -131,13 +154,6 @@ input {
 <div class="container hidden" id="mainContent">
 
 <h1>Khushi, You Are My Forever ❤️</h1>
-
-<div class="section">
-<h2>Why I Love You 💕</h2>
-<p>Your smile is my daily motivation.</p>
-<p>You stood beside me in every struggle.</p>
-<p>You are not just my wife, you are my strength.</p>
-</div>
 
 <div class="section">
 <h2>Our Memories 📸</h2>
@@ -149,38 +165,24 @@ input {
 </div>
 
 <div class="section">
-<h2>Important Question 😏</h2>
-<p>Will you love me forever? ❤️</p>
-<button class="yes-btn" onclick="yesClicked()">YES 💖</button>
-<button class="no-btn" onmouseover="moveButton(this)">NO 😜</button>
-<p id="response"></p>
-</div>
-
-<div class="section">
-<h2>Rapid Fire For My Jaan 😘</h2>
-
-<p>Who loves you the most in this world? 😎</p>
-<button class="yes-btn" onclick="alert('Obviously meee 😌❤️')">YOU 😍</button>
-
-<p>Who is the cutest wife ever? 🥰</p>
-<button class="yes-btn" onclick="alert('Khushi Shuklaaaa 😍❤️')">ME 💁‍♀️</button>
-
-<p>Will you always support my crazy ideas? 🤪</p>
-<button class="yes-btn" onclick="alert('Deal pakki 😎❤️')">YES BOSS 💖</button>
-
-</div>
-
-<div class="section">
-<h2>One More Question 💍</h2>
+<h2>One Important Question 💍</h2>
 <p>Khushi… Will you marry me again? 😌</p>
-<button class="yes-btn" onclick="proposalYes()">YESSSS 💍</button>
+<button class="yes-btn" onclick="showProposal()">YESSSS 💍</button>
 </div>
 
 <h3>Forever Yours,<br>Saurabh ❤️</h3>
 
 </div>
 
+<!-- Proposal Popup -->
+<div id="proposalPopup">
+    <div class="ring">💍</div>
+    <h1>She Said YESSSS ❤️😭</h1>
+    <p>I promise to love you in every lifetime 💕</p>
+</div>
+
 <script>
+
 function checkPassword() {
     var password = document.getElementById("passwordInput").value;
     if(password.toLowerCase() === "jaan") {
@@ -193,19 +195,21 @@ function checkPassword() {
     }
 }
 
-function yesClicked() {
-    document.getElementById("response").innerHTML =
-    "I knew it 😍 You are my forever, Khushi ❤️";
+function showProposal() {
+    document.getElementById("proposalPopup").style.display = "flex";
+    launchConfetti();
 }
 
-function proposalYes() {
-    alert("Yayyyy 💍❤️ I promise to love you in every lifetime!");
-}
-
-function moveButton(button) {
-    button.style.position = "absolute";
-    button.style.left = Math.random() * 80 + "%";
-    button.style.top = Math.random() * 80 + "%";
+function launchConfetti() {
+    for(let i=0; i<100; i++) {
+        const conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left = Math.random()*100 + "vw";
+        conf.style.background = 
+            ["#ff0","#0ff","#f0f","#0f0","#f00"][Math.floor(Math.random()*5)];
+        document.body.appendChild(conf);
+        setTimeout(()=> conf.remove(),3000);
+    }
 }
 
 function startHearts() {
@@ -220,10 +224,9 @@ function createHeart() {
     heart.style.fontSize = Math.random() * 20 + 15 + "px";
     document.body.appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+    setTimeout(() => { heart.remove(); }, 6000);
 }
+
 </script>
 
 </body>
